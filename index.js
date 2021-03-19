@@ -86,17 +86,25 @@ class Airplane {
     fill(gallons) {
       this.tank += gallons;
     }
+    // drive(distance) {
+    //   // if (the tank runs out of gas before hitting the distance) {
+    //     // figure out how far the car would be able to go with its current tank value, set it to a value
+    //     // the tank is empty now
+    //     // use the value you created above to set the new odometer
+    //     // return `I ran out of fuel at ${this.odometer} miles!`
+    //   // }
+    //   //the two lines of code you figured out earlier
+    // }
     drive(distance) {
-      let req = distance / this.milesPerGallon;
-      while (req > 0) {
-        this.tank--;
-        this.odometer++;
-        distance--;
-        req /= distance / this.milesPerGallon;
-      }
-      if (this.tank === 0) {
+      // Barbara is a queen for helping me through this, this is her code below
+      if (this.tank - distance / this.milesPerGallon <= 0) { // if the car would run out of gas
+        let newDistance = this.milesPerGallon * this.tank; // figure out how far the car goes before it dies
+        this.tank = 0; // set the tank to empty
+        this.odometer = this.odometer + newDistance; // add the distance it was able to drive to the odometer
         return `I ran out of fuel at ${this.odometer} miles!`;
       }
+      this.tank = this.tank - distance / this.milesPerGallon; // if the car wouldn't run out of gas, calc the new fuel
+      this.odometer = this.odometer + distance; // and calc the new distance
     }
   }
   
@@ -198,8 +206,18 @@ class Student extends Lambdasian {
           + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
           + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
   */
- class ProjectManager {
-     
+ class ProjectManager extends Instructor {
+     constructor(person) {
+       super(person);
+       this.gradClassName = person.gradClassName;
+       this.favInstructor = person.favInstructor;
+     }
+     standUp(channel) {
+       return `${this.name} announces to ${channel}, @channel standy times!`;
+     }
+     debugsCode(student, subject) {
+       return `${this.name} debugs ${student.name}'s code on ${subject}`;
+     }     
  }
   /*
     STRETCH PROBLEM (no tests!)
